@@ -10,7 +10,7 @@
         <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>CodeNames</RootNamespace>
+        <RootNamespace>CodeNames.WebApp</RootNamespace>
         <AssemblyName>CodeNames.WebApp</AssemblyName>
         <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <MvcBuildViews>false</MvcBuildViews>
@@ -49,6 +49,22 @@
         <Reference Include="Microsoft.CSharp" />
         <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
           <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="Ninject, Version=3.3.3.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7">
+          <HintPath>..\packages\Ninject.3.3.3\lib\net45\Ninject.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="Ninject.Web.Common, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7">
+          <HintPath>..\packages\Ninject.Web.Common.3.3.0\lib\net45\Ninject.Web.Common.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="Ninject.Web.Common.WebHost, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7">
+          <HintPath>..\packages\Ninject.Web.Common.WebHost.3.3.0\lib\net45\Ninject.Web.Common.WebHost.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="Ninject.Web.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7">
+          <HintPath>..\packages\Ninject.MVC5.3.3.0\lib\net45\Ninject.Web.Mvc.dll</HintPath>
           <Private>True</Private>
         </Reference>
         <Reference Include="System" />
@@ -116,16 +132,19 @@
         <Compile Include="App_Start\BundleConfig.cs" />
         <Compile Include="App_Start\FilterConfig.cs" />
         <Compile Include="App_Start\RouteConfig.cs" />
+        <Compile Include="Controllers\GameController.cs" />
         <Compile Include="Controllers\HomeController.cs" />
         <Compile Include="Global.asax.cs">
             <DependentUpon>Global.asax</DependentUpon>
         </Compile>
+        <Compile Include="Models\GameViewModel.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="favicon.ico" />
         <Content Include="Global.asax" />
         <Content Include="Content\Site.css" />
+        <Content Include="Views\Game\Index.cshtml" />
         <Content Include="Web.config" />
         <Content Include="Web.Debug.config">
             <DependentUpon>Web.config</DependentUpon>
@@ -141,10 +160,23 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="App_Data" />
-        <Folder Include="Models" />
     </ItemGroup>
     <ItemGroup>
         <None Include="packages.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\CodeNames.Cores\CodeNames.Cores.csproj">
+        <Project>{f315e922-1f76-4c59-bbf6-9693ee36815a}</Project>
+        <Name>CodeNames.Cores</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\CodeNames.Interfaces\CodeNames.Interfaces.csproj">
+        <Project>{80fb4758-9085-43b2-b729-ce5d818df6a9}</Project>
+        <Name>CodeNames.Interfaces</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\CodeNames.Repositories\CodeNames.Repositories.csproj">
+        <Project>{1086be77-1a73-48bf-8d33-2204a3274743}</Project>
+        <Name>CodeNames.Repositories</Name>
+      </ProjectReference>
     </ItemGroup>
     <PropertyGroup>
         <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
