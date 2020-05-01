@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeNames.Interfaces", "Cod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeNames.Cores.Tests", "CodeNames.Cores.Tests\CodeNames.Cores.Tests.csproj", "{C1305F7C-A20B-4534-82F4-D110A59AA353}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeNames.Utils", "CodeNames.Utils\CodeNames.Utils.csproj", "{8D90847D-F6CA-4BE7-A9F1-D836FC01E4E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{C1305F7C-A20B-4534-82F4-D110A59AA353}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1305F7C-A20B-4534-82F4-D110A59AA353}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1305F7C-A20B-4534-82F4-D110A59AA353}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D90847D-F6CA-4BE7-A9F1-D836FC01E4E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D90847D-F6CA-4BE7-A9F1-D836FC01E4E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D90847D-F6CA-4BE7-A9F1-D836FC01E4E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D90847D-F6CA-4BE7-A9F1-D836FC01E4E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

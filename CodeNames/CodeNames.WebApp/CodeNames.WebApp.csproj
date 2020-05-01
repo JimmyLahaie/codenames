@@ -177,6 +177,10 @@
         <Project>{1086be77-1a73-48bf-8d33-2204a3274743}</Project>
         <Name>CodeNames.Repositories</Name>
       </ProjectReference>
+      <ProjectReference Include="..\CodeNames.Utils\CodeNames.Utils.csproj">
+        <Project>{8d90847d-f6ca-4be7-a9f1-d836fc01e4e3}</Project>
+        <Name>CodeNames.Utils</Name>
+      </ProjectReference>
     </ItemGroup>
     <PropertyGroup>
         <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

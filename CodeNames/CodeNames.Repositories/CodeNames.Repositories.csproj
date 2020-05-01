@@ -38,6 +38,7 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="FileReader.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="WordsRepository.cs" />
     </ItemGroup>
@@ -45,6 +46,10 @@
       <ProjectReference Include="..\CodeNames.Interfaces\CodeNames.Interfaces.csproj">
         <Project>{80fb4758-9085-43b2-b729-ce5d818df6a9}</Project>
         <Name>CodeNames.Interfaces</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\CodeNames.Utils\CodeNames.Utils.csproj">
+        <Project>{8d90847d-f6ca-4be7-a9f1-d836fc01e4e3}</Project>
+        <Name>CodeNames.Utils</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

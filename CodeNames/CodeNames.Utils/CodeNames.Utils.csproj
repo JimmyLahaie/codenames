@@ -4,11 +4,11 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{F315E922-1F76-4C59-BBF6-9693EE36815A}</ProjectGuid>
+        <ProjectGuid>{8D90847D-F6CA-4BE7-A9F1-D836FC01E4E3}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>CodeNames.Cores</RootNamespace>
-        <AssemblyName>CodeNames.Cores</AssemblyName>
+        <RootNamespace>CodeNames.Utils</RootNamespace>
+        <AssemblyName>CodeNames.Utils</AssemblyName>
         <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -38,11 +38,8 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Models\Card.cs" />
-        <Compile Include="Models\Color.cs" />
-        <Compile Include="Models\Game.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="Services\GameBuilder.cs" />
+        <Compile Include="RandomUtils.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\CodeNames.Interfaces\CodeNames.Interfaces.csproj">

@@ -2,21 +2,38 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>Codename</h1>
-    
-</div>
+<h1>Codenames</h1>
+
 
 <div class="row">
     <div class="col-md-4">
-        <h2></h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p>
-            <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a>
-        </p>
+        <form action="@Url.Action("New", "Game")">
+            <h3>Je veux démarrer une nouvelle partie :</h3>
+            <p>
+                En tant que spymaster, celui qui donnes les indices 
+                
+                <button type="submit" name="PlayerType" value="SpyMaster" class="btn btn-info">GO</button>
+                
+            </p>
+            <p>
+                En tant qu'agent, celui qui découvre les mots
+                <button type="submit" name="PlayerType" value="Agent" class="btn btn-info">GO</button>
+            </p>
+        </form>
+        
+         <form action="@Url.Action("New", "Game")">
+             <h3>Je veux joindre une nouvelle partie :</h3>
+             <p>
+                 Code de la partie: <input type="text" />
+             </p>
+            <p>
+                En tant que spymaster, celui qui donnes les indices
+                <button type="submit" name="PlayerType" value="SpyMaster" class="btn btn-info">GO</button>
+            </p>
+            <p>
+                En tant qu'agent, celui qui découvre les mots
+                <button type="submit" name="PlayerType" value="Agent" class="btn btn-info">GO</button>
+            </p>
+        </form>
     </div>
 </div>

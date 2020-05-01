@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using CodeNames.Cores.Models;
 using CodeNames.Cores.Services;
 using CodeNames.WebApp.Models;
 
@@ -14,11 +13,12 @@ namespace CodeNames.WebApp.Controllers
             _gameBuilder = gameBuilder;
         }
         
-        public ActionResult Index()
+        public ActionResult SpyMaster()
         {
-            var game = _gameBuilder.GetNewGame(Color.Blue);
+            var game = _gameBuilder.GetNewGame();
             var gameViewModel = new GameViewModel
             {
+                FirstPlayer = game.FirstPlayer,
                 Key = game.Key
             };
             for (int i = 0; i < 5; i++)
@@ -30,7 +30,12 @@ namespace CodeNames.WebApp.Controllers
                 }
             }
 
-            return View(gameViewModel);
+            return View("Index", gameViewModel);
+        }
+
+        public ActionResult New()
+        {
+            return null;
         }
 
     }

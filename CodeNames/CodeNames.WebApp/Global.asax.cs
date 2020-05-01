@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using CodeNames.Cores.Services;
-using CodeNames.Cores.Utils;
 using CodeNames.Interfaces;
 using CodeNames.Repositories;
+using CodeNames.Utils;
 using Ninject;
 using Ninject.Web.Common.WebHost;
 
@@ -29,7 +25,8 @@ namespace CodeNames.WebApp
             var kernel = new StandardKernel();
             kernel.Bind<IWordsRepository>().To<WordsRepository>();
             kernel.Bind<IGameBuilder>().To<GameBuilder>();
-            kernel.Bind<IRandomCodeGenerator>().To<RandomCodeGenerator>();
+            kernel.Bind<IRandomUtils>().To<RandomUtils>();
+            kernel.Bind<IFileReader>().To<FileReader>();
             return kernel;
         }
     }

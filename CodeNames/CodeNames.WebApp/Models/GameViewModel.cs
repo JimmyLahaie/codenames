@@ -7,6 +7,8 @@ namespace CodeNames.WebApp.Models
 		public string Key { get; set; }
 		public CardViewModel[,] Cards { get; set; }
 
+		public Color FirstPlayer { get; set; }
+
 		public GameViewModel()
 		{
 			Cards = new CardViewModel[5,5];

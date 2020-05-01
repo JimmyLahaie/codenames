@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CodeNames.Cores.Models;
 using CodeNames.Cores.Services;
-using CodeNames.Cores.Utils;
 using CodeNames.Interfaces;
 using Xunit;
 using FakeItEasy;
@@ -12,55 +10,42 @@ namespace CodeNames.Cores.Tests.Services
 {
 	public class GameBuilderTests
 	{
-		private readonly IRandomCodeGenerator _codeGenerator;
+		private readonly IRandomUtils _randomUtils;
 		private readonly GameBuilder _gameBuilder;
 
 		public GameBuilderTests()
 		{
 			var wordBuilder = A.Fake<IWordsRepository>(); 
-			_codeGenerator = A.Fake<IRandomCodeGenerator>();
+			_randomUtils = A.Fake<IRandomUtils>();
 			
-			A.CallTo(() => wordBuilder.Get25RandomWords(false)).Returns(GetListOfWords());
-			A.CallTo(() => _codeGenerator.GetRandomGameCode()).Returns("aaa");
+			A.CallTo(() => wordBuilder.Get25RandomWords()).Returns(GetListOfWords());
+			A.CallTo(() => _randomUtils.GenerateCode()).Returns("aaa");
 			
-			_gameBuilder = new GameBuilder(wordBuilder, _codeGenerator);
+			_gameBuilder = new GameBuilder(wordBuilder, _randomUtils);
 		}
 		
 		[Fact]
 		public void BuildingNewGaShouldAssignRandomKey()
 		{
-			A.CallTo(() => _codeGenerator.GetRandomGameCode()).Returns("some-code");
+			A.CallTo(() => _randomUtils.GenerateCode()).Returns("some-code");
 
-			var game = _gameBuilder.GetNewGame(Color.Blue);
+			var game = _gameBuilder.GetNewGame();
 			Assert.Equal("some-code", game.Key);
 		}
 
-		[Fact]
-		public void WhenBlueStartShouldHave9Blue8Red()
+		[Theory]
+		[InlineData(Color.Blue)]
+		[InlineData(Color.Red)]
+		public void FirstPlayerMustHave9Cards(Color firstPlayer)
 		{
-			var game = _gameBuilder.GetNewGame(Color.Blue);
+			var otherPlayer = firstPlayer == Color.Blue ? Color.Red : Color.Blue;
+			A.CallTo(() => _randomUtils.SingleValue(A<Color>.Ignored, A<Color>.Ignored)).Returns(firstPlayer);
+			var game = _gameBuilder.GetNewGame();
 			var cards = GetGameCardList(game);
-			Assert.Equal(9, cards.Count(c => c.Color == Color.Blue));
-			Assert.Equal(8, cards.Count(c => c.Color == Color.Red));
+			Assert.Equal(9, cards.Count(c => c.Color == firstPlayer));
+			Assert.Equal(8, cards.Count(c => c.Color == otherPlayer));
 			Assert.Equal(1, cards.Count(c => c.Color == Color.Black));
 			Assert.Equal(7, cards.Count(c => c.Color == Color.Beige));
-		}
-		
-		[Fact]
-		public void WhenRedStartShouldHave9Red8Blue()
-		{
-			var game = _gameBuilder.GetNewGame(Color.Blue);
-			var cards = GetGameCardList(game);
-			Assert.Equal(9, cards.Count(c => c.Color == Color.Red));
-			Assert.Equal(8, cards.Count(c => c.Color == Color.Blue));
-			Assert.Equal(1, cards.Count(c => c.Color == Color.Black));
-			Assert.Equal(7, cards.Count(c => c.Color == Color.Beige));
-		}
-
-		[Fact]
-		public void TestAboutRandom()
-		{
-			Assert.True(false, "Should do test about random or create a randomutil and mock it");
 		}
 
 		private List<Card> GetGameCardList(Game game)

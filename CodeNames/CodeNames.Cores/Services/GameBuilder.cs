@@ -1,40 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeNames.Cores.Models;
-using CodeNames.Cores.Utils;
 using CodeNames.Interfaces;
 
 namespace CodeNames.Cores.Services
 {
 	public interface IGameBuilder
 	{
-		Game GetNewGame(Color firstPlayer);
+		Game GetNewGame();
 	}
 
 	public class GameBuilder : IGameBuilder
 	{
 		private readonly IWordsRepository _wordRepository;
-		private readonly IRandomCodeGenerator _randomCodeGenerator;
+		private readonly IRandomUtils _randomUtils;
 
-		public GameBuilder(IWordsRepository wordRepository, IRandomCodeGenerator randomCodeGenerator)
+
+		public GameBuilder(IWordsRepository wordRepository, IRandomUtils randomUtils)
 		{
 			_wordRepository = wordRepository;
-			_randomCodeGenerator = randomCodeGenerator;
+			_randomUtils = randomUtils;
 		}
 		
-		public Game GetNewGame(Color firstPlayer)
-		{
-			if (firstPlayer == Color.Black || firstPlayer == Color.Beige)
-			{
-				throw new ArgumentException("First player cannot only be Blue or Red.");
-			}
-			
-			var words = _wordRepository.Get25RandomWords(false);
-			var cards = GetListOfCards(firstPlayer, words);
+		public Game GetNewGame()
+		{ 
 			var game = new Game
 			{
-				Key = _randomCodeGenerator.GetRandomGameCode()
+				FirstPlayer = _randomUtils.SingleValue(Color.Blue, Color.Red),
+				Key = _randomUtils.GenerateCode()
 			};
+			var words = _wordRepository.Get25RandomWords();
+			var cards = GetListOfCards(game.FirstPlayer, words);
+			
 			
 			for (int i = 0; i < 5; i++)
 			{
