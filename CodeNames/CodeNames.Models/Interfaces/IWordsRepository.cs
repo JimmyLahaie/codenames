@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CodeNames.Interfaces
+namespace CodeNames.Models.Interfaces
 {
     public interface IWordsRepository
     {

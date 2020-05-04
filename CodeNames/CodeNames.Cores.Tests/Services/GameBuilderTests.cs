@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CodeNames.Cores.Models;
 using CodeNames.Cores.Services;
 using CodeNames.Interfaces;
+using CodeNames.Models.DTO;
 using Xunit;
 using FakeItEasy;
 

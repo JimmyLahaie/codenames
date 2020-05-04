@@ -1,4 +1,4 @@
-﻿using CodeNames.Cores.Models;
+﻿using CodeNames.Models.DTO;
 
 namespace CodeNames.WebApp.Models
 {

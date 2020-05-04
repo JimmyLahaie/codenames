@@ -32,6 +32,13 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="CodeNames.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\CodeNames.WebApp\Bin\CodeNames.Interfaces.dll</HintPath>
+        </Reference>
+        <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+          <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
@@ -39,6 +46,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="FileReader.cs" />
+        <Compile Include="GameRepository.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="WordsRepository.cs" />
     </ItemGroup>
@@ -47,10 +55,17 @@
         <Project>{80fb4758-9085-43b2-b729-ce5d818df6a9}</Project>
         <Name>CodeNames.Interfaces</Name>
       </ProjectReference>
+      <ProjectReference Include="..\CodeNames.Models\CodeNames.Models.csproj">
+        <Project>{c1b12f0e-d491-4de7-bda4-554796fab4ce}</Project>
+        <Name>CodeNames.Models</Name>
+      </ProjectReference>
       <ProjectReference Include="..\CodeNames.Utils\CodeNames.Utils.csproj">
         <Project>{8d90847d-f6ca-4be7-a9f1-d836fc01e4e3}</Project>
         <Name>CodeNames.Utils</Name>
       </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

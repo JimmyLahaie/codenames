@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using CodeNames.Cores.Models;
 using CodeNames.Cores.Services;
 using CodeNames.WebApp.Models;
 
@@ -6,21 +7,23 @@ namespace CodeNames.WebApp.Controllers
 {
     public class GameController : Controller
     {
-        private readonly IGameBuilder _gameBuilder;
+        private readonly IGameServices _gameService;
 
-        public GameController(IGameBuilder gameBuilder)
+        public GameController(IGameServices gameService)
         {
-            _gameBuilder = gameBuilder;
+            _gameService = gameService;
         }
         
-        public ActionResult SpyMaster()
+        public ActionResult SpyMaster(string id)
         {
-            var game = _gameBuilder.GetNewGame();
+            var game = _gameService.GetGame(id);
+            
             var gameViewModel = new GameViewModel
             {
                 FirstPlayer = game.FirstPlayer,
                 Key = game.Key
             };
+            
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 5; j++)
@@ -33,9 +36,11 @@ namespace CodeNames.WebApp.Controllers
             return View("Index", gameViewModel);
         }
 
-        public ActionResult New()
+        [HttpPost]
+        public ActionResult New(PlayerType playerType)
         {
-            return null;
+            var gameKey = _gameService.CreateGame();
+            return RedirectToAction(playerType == PlayerType.SpyMaster ? "SpyMaster" : "Agent", new {id = gameKey});
         }
 
     }

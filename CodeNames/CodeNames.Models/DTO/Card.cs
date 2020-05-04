@@ -1,4 +1,4 @@
-﻿namespace CodeNames.Cores.Models
+﻿namespace CodeNames.Models.DTO
 {
 	public class Card
 	{

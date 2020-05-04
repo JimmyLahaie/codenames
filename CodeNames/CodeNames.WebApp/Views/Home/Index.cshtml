@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form action="@Url.Action("New", "Game")">
+        <form action="@Url.Action("New", "Game")" method="post">
             <h3>Je veux démarrer une nouvelle partie :</h3>
             <p>
                 En tant que spymaster, celui qui donnes les indices 
@@ -21,7 +21,7 @@
             </p>
         </form>
         
-         <form action="@Url.Action("New", "Game")">
+         <form action="@Url.Action("New", "Game")" method="post">
              <h3>Je veux joindre une nouvelle partie :</h3>
              <p>
                  Code de la partie: <input type="text" />

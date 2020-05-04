@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using CodeNames.Cores.Models;
+﻿using System.Collections.Generic;
 using CodeNames.Interfaces;
+using CodeNames.Models.DTO;
 
 namespace CodeNames.Cores.Services
 {

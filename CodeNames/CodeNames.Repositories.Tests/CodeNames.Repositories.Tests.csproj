@@ -37,6 +37,9 @@
           <HintPath>..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
           <Private>True</Private>
         </Reference>
+        <Reference Include="CodeNames.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\CodeNames.WebApp\Bin\CodeNames.Interfaces.dll</HintPath>
+        </Reference>
         <Reference Include="FakeItEasy, Version=6.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c">
           <HintPath>..\packages\FakeItEasy.6.0.1\lib\net45\FakeItEasy.dll</HintPath>
           <Private>True</Private>
