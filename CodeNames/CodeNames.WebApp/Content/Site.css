@@ -1,24 +1,80 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿.cn-card-line{
+
+}
+.cn-card-container{
+    /*border-width: 1px; */
+    /*border-style: solid; */
+    /*border-color: red*/
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.cn-card
+{
+    width: 200px;
+    height: 120px;
+    background-image: url("/Content/Images/Card.png");
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: 100%;
+}
+.cn-card span
+{
+    display: block;
+    width: 100% ;
+    text-transform: uppercase;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+.cn-card span.main
+{
+    padding: 15px 0 0 18px;
+    font-weight: bold;
+    font-size: 19px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.cn-card span.flip
+{
+    padding: 0 0 38px 66px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #a59d9c;
+    font-size: 15px;
+}
+
+.flip
+{
+    -moz-transform: scale(-1, -1);
+    -webkit-transform: scale(-1, -1);
+    -o-transform: scale(-1, -1);
+    -ms-transform: scale(-1, -1);
+    transform: scale(-1, -1);
+}
+
+.cn-key-container
+{
+    width: 200px;
+    height: 200px;
+}
+
+.cn-key-container.blue
+{
+    background-image: url('/Content/Images/key-blue.png')
+}
+
+.cn-key-container.red
+{
+    background-image: url('/Content/Images/key-red.png')
+}
+
+.cn-key-line
+{
+    width: 143px;
+    height:29px;
+    position:relative;
+    top: 31px;
+    left: 31px;
+}
+
+.key-dot
+{
+    height:28px;
+    border: black 1px solid;
 }

@@ -14,33 +14,30 @@ namespace CodeNames.WebApp.Controllers
             _gameService = gameService;
         }
         
-        public ActionResult SpyMaster(string id)
+        public ActionResult SpyMaster(string key)
         {
-            var game = _gameService.GetGame(id);
-            
-            var gameViewModel = new GameViewModel
-            {
-                FirstPlayer = game.FirstPlayer,
-                Key = game.Key
-            };
-            
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 5; j++)
-                {
-                    var card = game.Cards[i, j];
-                    gameViewModel.Cards[i, j] = new CardViewModel{Color = card.Color, Word = card.Word, Identified = card.Identified};
-                }
-            }
+            var game = _gameService.GetGame(key);
 
-            return View("Index", gameViewModel);
+            var gameViewModel = GameViewModel.FromGame(game);
+
+            return View("SpyMaster", gameViewModel);
+        }
+        
+        public ActionResult Agent(string key)
+        {
+            var game = _gameService.GetGame(key);
+
+            var gameViewModel = GameViewModel.FromGame(game);
+
+            return View("Agent", gameViewModel);
+            
         }
 
         [HttpPost]
         public ActionResult New(PlayerType playerType)
         {
             var gameKey = _gameService.CreateGame();
-            return RedirectToAction(playerType == PlayerType.SpyMaster ? "SpyMaster" : "Agent", new {id = gameKey});
+            return RedirectToAction(playerType == PlayerType.SpyMaster ? "SpyMaster" : "Agent", new {key = gameKey});
         }
 
     }

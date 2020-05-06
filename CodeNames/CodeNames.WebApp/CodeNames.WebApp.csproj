@@ -144,10 +144,25 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
+        <Content Include="Content\Images\beige-man.png" />
+        <Content Include="Content\Images\beige-woman.png" />
+        <Content Include="Content\Images\blue-man.png" />
+        <Content Include="Content\Images\blue-woman.png" />
+        <Content Include="Content\Images\Card.png" />
+        <Content Include="Content\Images\dot-beige.png" />
+        <Content Include="Content\Images\dot-black.png" />
+        <Content Include="Content\Images\dot-blue.png" />
+        <Content Include="Content\Images\dot-red.png" />
+        <Content Include="Content\Images\key-blue.png" />
+        <Content Include="Content\Images\key-red.png" />
+        <Content Include="Content\Images\red-man.png" />
+        <Content Include="Content\Images\red-woman.png" />
+        <Content Include="Content\Images\spy-black.png" />
         <Content Include="favicon.ico" />
         <Content Include="Global.asax" />
         <Content Include="Content\Site.css" />
-        <Content Include="Views\Game\Index.cshtml" />
+        <Content Include="Views\Game\Agent.cshtml" />
+        <Content Include="Views\Game\SpyMaster.cshtml" />
         <Content Include="Web.config" />
         <Content Include="Web.Debug.config">
             <DependentUpon>Web.config</DependentUpon>
