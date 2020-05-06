@@ -1,6 +1,6 @@
-﻿using System.Data;
-using System.IO;
+﻿using System.IO;
 using CodeNames.Models.DTO;
+using CodeNames.Models.Exceptions;
 using CodeNames.Models.Interfaces;
 using Newtonsoft.Json;
 
@@ -20,7 +20,7 @@ namespace CodeNames.Repositories
 			var filename = GameFullFileName(game.Key);
 			if (File.Exists(filename))
 			{
-				throw new DuplicateNameException($"Cannot create game with key '{game.Key}'. Another game with the same key already exists.");
+				throw new GameAlreadyExistsException(game.Key, _baseFolder);
 			}
 
 			var gameAsJson = JsonConvert.SerializeObject(game);
@@ -34,6 +34,11 @@ namespace CodeNames.Repositories
 
 		public Game GetGame(string key)
 		{
+			var filename = GameFullFileName(key);
+			if (!File.Exists(filename))
+			{
+				throw new GameNotFoundException(key, _baseFolder);
+			}
 			var json = File.ReadAllText(GameFullFileName(key));
 			return JsonConvert.DeserializeObject<Game>(json);
 		}

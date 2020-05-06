@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
-using CodeNames.Cores.Models;
 using CodeNames.Cores.Services;
+using CodeNames.Models.DTO;
 using CodeNames.WebApp.Models;
 
 namespace CodeNames.WebApp.Controllers

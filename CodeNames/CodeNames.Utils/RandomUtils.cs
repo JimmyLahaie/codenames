@@ -18,6 +18,7 @@ namespace CodeNames.Utils
 				lst[swapIndex] = temp;
 			}
 		}
+		
 		public string GenerateCode()
 		{
 			const string friendlyChar = "ABCEFGHJKLMNPRSTUVWXYZ23456789";

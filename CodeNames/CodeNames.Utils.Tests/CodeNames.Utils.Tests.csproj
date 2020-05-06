@@ -5,11 +5,11 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{C1305F7C-A20B-4534-82F4-D110A59AA353}</ProjectGuid>
+        <ProjectGuid>{05B344F4-DF7D-4189-A76F-020237ADE7D9}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>CodeNames.Cores.Tests</RootNamespace>
-        <AssemblyName>CodeNames.Cores.Tests</AssemblyName>
+        <RootNamespace>CodeNames.Utils.Tests</RootNamespace>
+        <AssemblyName>CodeNames.Utils.Tests</AssemblyName>
         <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -33,19 +33,7 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc">
-          <HintPath>..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="CodeNames.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\CodeNames.WebApp\Bin\CodeNames.Interfaces.dll</HintPath>
-        </Reference>
-        <Reference Include="FakeItEasy, Version=6.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c">
-          <HintPath>..\packages\FakeItEasy.6.0.1\lib\net45\FakeItEasy.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
         <Reference Include="System" />
-        <Reference Include="System.Configuration" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
@@ -67,8 +55,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Services\GameBuilderTests.cs" />
-        <Compile Include="Services\GameServicesTests.cs" />
+        <Compile Include="RandomUtilsTests.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
@@ -77,13 +64,9 @@
       <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\CodeNames.Cores\CodeNames.Cores.csproj">
-        <Project>{f315e922-1f76-4c59-bbf6-9693ee36815a}</Project>
-        <Name>CodeNames.Cores</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\CodeNames.Models\CodeNames.Models.csproj">
-        <Project>{c1b12f0e-d491-4de7-bda4-554796fab4ce}</Project>
-        <Name>CodeNames.Models</Name>
+      <ProjectReference Include="..\CodeNames.Utils\CodeNames.Utils.csproj">
+        <Project>{8d90847d-f6ca-4be7-a9f1-d836fc01e4e3}</Project>
+        <Name>CodeNames.Utils</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
