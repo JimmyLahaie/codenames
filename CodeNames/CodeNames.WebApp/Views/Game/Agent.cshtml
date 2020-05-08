@@ -33,10 +33,15 @@
 			<div class="cn-card-line d-flex flex-row w-100 mb-2">
 				@for (int j = 0; j < 5; j++)
 				{
-					<div class="cn-card-container flex-fill">
-						<div class="cn-card">
-							<span class="flip">@Model.Cards[i, j].Word</span>
-							<span class="main">@Model.Cards[i, j].Word</span>
+					var card = @Model.Cards[i, j];
+					<div class="cn-card-container flex-fill mx-1">
+						<div class="cn-word-card-container">
+							<div class="cn-word-card">
+								<a href="#" class="w-100 h-100" data-card-x="@i" data-card-y="@j">
+								<span class="flip">@Model.Cards[i, j].Word</span>
+								<span class="main">@Model.Cards[i, j].Word</span>
+								</a>
+							</div>
 						</div>
 					</div>
 				}
@@ -52,3 +57,55 @@
 		</div>
 	</div>
 </div>
+
+<input type="hidden" id="gameKey" value="@Model.Key" />
+<input type="hidden" id="playerType" value="@PlayerType.SpyMaster" />
+
+@section scripts {
+    <script src="/Content/Scripts/jquery.signalR-2.4.1.js"></script>
+    <script src="~/signalr/hubs"></script>
+  
+    <script>
+        $(function () {
+            
+            const gameKey = $("#gameKey").val();
+            const currentPlayerType = $("#playerType").val();
+            const gameHub = $.connection.gameHub;
+            
+            gameHub.client.hint = function(word, nbrCard) {
+                console.log("Received " + word + " " + nbrCard);
+            }
+            
+            gameHub.client.agentChoose = function(result){
+              console.log(result);
+              const img = $("<img alt=\"\"  id=\"blueCardTmp\" class=\"cn-new-card\" src=\"/Content/Images/blue-man.png\" style=\"margin-bottom: 5px; border-radius:  5px;\" />"); 
+              $(".cn-card-line:eq("+result.X+") .cn-card-container:eq("+result.Y+") .cn-word-card-container").append(img);
+              img.animate({opacity: 1}, 1200);
+            };
+            
+            // $("#btnConfirm").click(function() {
+            //    $(this).prop("disabled", "disabled");
+            //    console.log("calling server for hint")
+            //    gameHub.server.giveHint(gameKey, $("#hintWord").val(), nbrWordsInput.val()); 
+            // });
+            
+            $(".cn-word-card a").click(function(e){
+            	e.preventDefault();
+            	var lnk = $(this);
+            	var x = lnk.data("cardX");
+            	var y = lnk.data("cardY");
+            	gameHub.server.chooseCard(gameKey, x, y);
+            });
+             
+            $.connection.hub.start().done(function () {
+                console.log("join with gamekey " + gameKey);
+                gameHub.server.joinGame(gameKey, currentPlayerType);
+            });
+        });
+        // This optional function html-encodes messages for display in the page.
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+}

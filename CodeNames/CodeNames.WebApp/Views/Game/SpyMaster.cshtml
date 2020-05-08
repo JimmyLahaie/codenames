@@ -25,41 +25,120 @@
 }
 
 <h1>Codename</h1>
-
+<div class="row cn-cards-count">
+    <div class="col-md-3 my-2">
+        <div class="cn-count">
+            <img src="/Content/Images/blue-woman.png" alt="Cartes bleus"/>
+            x 
+            <span>9</span>
+        </div>
+    </div>
+    <div class="col-md-3 my-2">
+        <div class="cn-count">
+            <img src="/Content/Images/red-man.png" alt="Cartes rouge"/>
+            x 
+            <span>9</span>
+        </div>
+    </div>
+    <div class="col-md-3 my-2">
+        <div class="cn-count">
+            <img src="/Content/Images/beige-man.png" alt="Cartes beiges"/>
+            x 
+            <span>9</span>   
+        </div>
+    </div>
+    <div class="col-md-3 my-2">
+        <div class="cn-count">
+            <img src="/Content/Images/spy-black.png" alt="Cartes noir"/>
+            x 
+            <span>1</span>    
+        </div>
+    </div>
+</div>
 <div class="row">
-    <div class="col-10">
+    <form class="form-inline ml-2">
+        <div class="form-group mx-4 mb-2">
+            <label for="hintWord" class="sr-only">Votre indice</label>
+            <input type="text" maxlength="50" class="form-control" id="hintWord" placeholder="Votre indice">
+        </div>
+        <div class="input-group mx-4 mb-2 noSpinner">
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary" type="button" name="btnNbrWord" value="-1">-</button>
+            </div>
+            <input type="number" min="0" max="9" step="1" id="nbrWords" class="form-control " value="1" style="width:40px; flex: none;">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" name="btnNbrWord" value="1">+</button>
+            </div>
+        </div>
+        <div class="form-group mx-4">
+            <button type="button" id="btnConfirm" class="btn btn-primary mb-2">Confirmer</button>
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col-12">
         @for (int i = 0; i < 5; i++)
         {
             <div class="cn-card-line d-flex flex-row w-100 mb-2">
                 @for (int j = 0; j < 5; j++)
                 {
-                    <div class="cn-card-container flex-fill">
-                        <div class="cn-card">
-                            <span class="flip">@Model.Cards[i, j].Word</span>
-                            <span class="main">@Model.Cards[i, j].Word</span>
+                    var card = @Model.Cards[i, j];
+                    <div class="cn-card-container flex-fill mx-1">
+                        <div class="cn-word-card-container">
+                            <div class="cn-word-card @(card.Color == Color.Blue ? "hint-blue" : "") @(card.Color == Color.Red ? "hint-red" : "") @(card.Color == Color.Black ? "hint-black" : "")" >
+                                <span class="flip">@Model.Cards[i, j].Word</span>
+                                <span class="main">@Model.Cards[i, j].Word</span>    
+                            </div>
                         </div>
                     </div>
                 }
             </div>
         }
     </div>
-    <div class="col-2">
-        <div>
-        	<img src="/Content/Images/blue-man.png" style="margin-bottom: 5px; border-radius:  5px;" alt="Cartes bleus"/>    
-        </div>
-        <div>
-        	<img src="/Content/Images/red-woman.png" style="margin-bottom: 5px; border-radius: 5px;" alt="Cartes rouges"/>    
-        </div>
-        <div class="cn-key-container @(Model.FirstPlayer == Color.Blue ? "blue" : "red")">
-        	@for (int i = 0; i < 5; i++)
-        	{
-        		<div class="d-flex flex-row cn-key-line">
-        			@for (int j = 0; j < 5; j++)
-        			{
-        				<div class="flex-fill key-dot"><img src="/Content/Images/dot-@(GetColor(Model.Cards[i,j].Color)).png" alt="Position @i @j couleur @Model.Cards[i,j].Color" /></div>
-        			}
-        		</div>
-        	}
-        </div>
-    </div>
 </div>
+
+<input type="hidden" id="gameKey" value="@Model.Key" />
+<input type="hidden" id="playerType" value="@PlayerType.SpyMaster" />
+@section scripts {
+    <script src="/Content/Scripts/jquery.signalR-2.4.1.js"></script>
+    <script src="~/signalr/hubs"></script>
+  
+    <script>
+        $(function () {
+            const nbrWordsInput = $("#nbrWords");
+            $("button[name='btnNbrWord']").click(function(){
+               const toAdd = parseInt($(this).val());
+               const newVal = parseInt(nbrWordsInput.val()) + toAdd;
+               if (newVal >= 0 && newVal <= 9) {
+                nbrWordsInput.val(newVal);        
+               }
+            });
+            
+            const gameKey = $("#gameKey").val();
+            const currentPlayerType = $("#playerType").val();
+            const gameHub = $.connection.gameHub;
+            
+            gameHub.client.hint = function(word, nbrCard) {
+                console.log("Received " + word + " " + nbrCard);
+            }
+            
+            gameHub.client.agentChoose = function(result){
+              console.log(result);
+              const img = $("<img alt=\"\"  id=\"blueCardTmp\" class=\"cn-new-card\" src=\"/Content/Images/blue-man.png\" style=\"margin-bottom: 5px; border-radius:  5px;\" />"); 
+              $(".cn-card-line:eq("+result.X+") .cn-card-container:eq("+result.Y+") .cn-word-card-container").append(img);
+              img.animate({opacity: 1}, 1200);
+            };
+            
+            $("#btnConfirm").click(function() {
+               $(this).prop("disabled", "disabled");
+               console.log("calling server for hint")
+               gameHub.server.giveHint(gameKey, $("#hintWord").val(), nbrWordsInput.val()); 
+            });
+             
+            $.connection.hub.start().done(function () {
+                console.log("join with gamekey " + gameKey);
+                gameHub.server.joinGame(gameKey, currentPlayerType);
+            });
+        });
+    </script>
+}

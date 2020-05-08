@@ -2,35 +2,71 @@
 
 }
 .cn-card-container{
-    /*border-width: 1px; */
-    /*border-style: solid; */
-    /*border-color: red*/
+    
 }
 
-.cn-card
+.cn-word-card-container
+{
+    height:120px;
+    overflow: hidden;
+}
+
+.cn-word-card
 {
     width: 200px;
     height: 120px;
     background-image: url("/Content/Images/Card.png");
-    background-repeat: no-repeat;
+    background-repeat: space;
     background-position: top left;
     background-size: 100%;
+    border-radius: 9px;
 }
-.cn-card span
+
+.cn-word-card.hint-blue
+{
+    background-image: url("/Content/Images/card-blue.png");
+}
+
+.cn-word-card.hint-red
+{
+    background-image: url("/Content/Images/card-red.png");
+}
+
+.cn-word-card.hint-black
+{
+    background-image: url("/Content/Images/card-black.png");
+}
+
+.cn-new-card{
+    position: absolute;
+    margin-top:-120px;
+    opacity: 0;
+}
+
+.cn-word-card a {
+    text-decoration: none;
+    color: black;
+}
+
+.cn-word-card a:hover {
+    text-decoration: none;
+}
+
+.cn-word-card span
 {
     display: block;
     width: 100% ;
     text-transform: uppercase;
 }
 
-.cn-card span.main
+.cn-word-card span.main
 {
     padding: 15px 0 0 18px;
     font-weight: bold;
     font-size: 19px;
 }
 
-.cn-card span.flip
+.cn-word-card span.flip
 {
     padding: 0 0 38px 66px;
     text-transform: uppercase;
@@ -77,4 +113,32 @@
 {
     height:28px;
     border: black 1px solid;
+}
+
+.new-card{
+    position: absolute;
+    top: 0px;
+    opacity: 0;
+}
+
+.cn-cards-count .cn-count
+{
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.cn-cards-count .cn-count img
+{
+    width: 100px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+
+
+.noSpinner input::-webkit-outer-spin-button,
+.noSpinner input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    margin: 0;
 }
