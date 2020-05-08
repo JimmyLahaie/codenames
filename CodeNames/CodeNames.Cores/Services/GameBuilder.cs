@@ -31,6 +31,7 @@ namespace CodeNames.Cores.Services
 			var words = _wordRepository.Get25RandomWords();
 			var cards = GetListOfCards(game.FirstPlayer, words);
 			
+			_randomUtils.RandomizeList(cards);
 			
 			for (int i = 0; i < 5; i++)
 			{

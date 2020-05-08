@@ -15,12 +15,14 @@ namespace CodeNames.Cores.Tests.Services
 
 		public GameBuilderTests()
 		{
-			var wordBuilder = A.Fake<IWordsRepository>(); 
-			_randomUtils = A.Fake<IRandomUtils>();
+			var wordBuilder = A.Fake<IWordsRepository>(o => o.Strict()); 
+			_randomUtils = A.Fake<IRandomUtils>(o => o.Strict());
 			
 			A.CallTo(() => wordBuilder.Get25RandomWords()).Returns(GetListOfWords());
 			A.CallTo(() => _randomUtils.GenerateCode()).Returns("aaa");
-			
+			A.CallTo(() => _randomUtils.SingleValue(Color.Blue, Color.Red)).Returns(Color.Blue);
+			A.CallTo(() => _randomUtils.RandomizeList(A<List<Card>>.Ignored)).Invokes(() => { });
+
 			_gameBuilder = new GameBuilder(wordBuilder, _randomUtils);
 		}
 		
@@ -48,6 +50,13 @@ namespace CodeNames.Cores.Tests.Services
 			Assert.Equal(7, cards.Count(c => c.Color == Color.Beige));
 		}
 
+		[Fact]
+		public void ColorShouldBeShuffle()
+		{
+			_gameBuilder.GetNewGame();
+			A.CallTo(() => _randomUtils.RandomizeList(A<List<Card>>.Ignored)).MustHaveHappened();
+		}
+
 		private List<Card> GetGameCardList(Game game)
 		{
 			var lst = new List<Card>();
@@ -61,8 +70,6 @@ namespace CodeNames.Cores.Tests.Services
 
 			return lst;
 		}
-		
-		
 
 		private List<string> GetListOfWords()
 		{
