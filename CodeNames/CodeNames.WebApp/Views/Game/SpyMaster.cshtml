@@ -1,4 +1,5 @@
 ﻿@using CodeNames.Models.DTO
+@using System.Linq;
 @model CodeNames.WebApp.Models.GameViewModel
 @{
     ViewBag.Title = "Home Page";
@@ -30,38 +31,41 @@
         <div class="cn-count">
             <img src="/Content/Images/blue-woman.png" alt="Cartes bleus"/>
             x 
-            <span>9</span>
+            <span>@Model.CardList.Count(c => c.Color == Color.Blue)</span>
         </div>
     </div>
     <div class="col-md-3 my-2">
         <div class="cn-count">
             <img src="/Content/Images/red-man.png" alt="Cartes rouge"/>
             x 
-            <span>9</span>
+            <span>@Model.CardList.Count(c => c.Color == Color.Red)</span>
         </div>
     </div>
     <div class="col-md-3 my-2">
         <div class="cn-count">
             <img src="/Content/Images/beige-man.png" alt="Cartes beiges"/>
             x 
-            <span>9</span>   
+            <span>@Model.CardList.Count(c => c.Color == Color.Beige)</span>   
         </div>
     </div>
     <div class="col-md-3 my-2">
         <div class="cn-count">
             <img src="/Content/Images/spy-black.png" alt="Cartes noir"/>
             x 
-            <span>1</span>    
+            <span>@Model.CardList.Count(c => c.Color == Color.Black)</span>    
         </div>
     </div>
 </div>
-<div class="row">
-    <form class="form-inline ml-2">
-        <div class="form-group mx-4 mb-2">
+<div class="row my-2 py-2 cn-spy-master-toolbar">
+    <form class="form-inline">
+         <div class="form-group mx-4">
+             <span id="playMessage">Espion Bleu, donnez votre indice et le nombre de mots.</span> @*... en attente de votre agent*@
+        </div>
+        <div class="form-group mx-4">
             <label for="hintWord" class="sr-only">Votre indice</label>
             <input type="text" maxlength="50" class="form-control" id="hintWord" placeholder="Votre indice">
         </div>
-        <div class="input-group mx-4 mb-2 noSpinner">
+        <div class="input-group mx-4 noSpinner">
             <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary" type="button" name="btnNbrWord" value="-1">-</button>
             </div>
@@ -71,11 +75,11 @@
             </div>
         </div>
         <div class="form-group mx-4">
-            <button type="button" id="btnConfirm" class="btn btn-primary mb-2">Confirmer</button>
+            <button type="button" id="btnConfirm" class="btn btn-primary">Confirmer</button>
         </div>
     </form>
 </div>
-<div class="row">
+<div class="row mb-5">
     <div class="col-12">
         @for (int i = 0; i < 5; i++)
         {
@@ -99,11 +103,21 @@
 
 <input type="hidden" id="gameKey" value="@Model.Key" />
 <input type="hidden" id="playerType" value="@PlayerType.SpyMaster" />
+<input type="hidden" id="firstPlayer" value="@Model.FirstPlayer" />
 @section scripts {
     <script src="/Content/Scripts/jquery.signalR-2.4.1.js"></script>
     <script src="~/signalr/hubs"></script>
   
     <script>
+    
+    $(".cn-spy-master-toolbar").removeClass("blue-turn").addClass("red-turn")
+    
+    
+    
+    
+    
+    
+    
         $(function () {
             const nbrWordsInput = $("#nbrWords");
             $("button[name='btnNbrWord']").click(function(){

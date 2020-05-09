@@ -136,6 +136,33 @@
 
 
 
+.cn-spy-master-toolbar.red-turn button
+{
+    background-color: red;
+    transition: background-color 2s ease;
+}
+.cn-spy-master-toolbar.red-turn
+{
+    background-color: #E34F1D;
+    transition: background-color 2s ease;
+}
+
+.cn-spy-master-toolbar.blue-turn
+{
+    background-color: #4069A3;
+    transition: background-color 2s ease;
+}
+.cn-spy-master-toolbar.blue-turn button
+{
+    background-color: blue;
+    transition: background-color 2s ease;
+}
+
+
+#spyMasterMessage{
+    min-width: 400px;
+}
+
 .noSpinner input::-webkit-outer-spin-button,
 .noSpinner input::-webkit-inner-spin-button {
     -webkit-appearance: none;

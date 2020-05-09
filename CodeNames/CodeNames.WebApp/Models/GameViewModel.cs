@@ -1,12 +1,35 @@
-﻿using CodeNames.Models.DTO;
+﻿
+using System.Collections.Generic;
+using CodeNames.Models.DTO;
 
 namespace CodeNames.WebApp.Models
 {
 	public class GameViewModel
 	{
 		public string Key { get; set; }
-		public CardViewModel[,] Cards { get; set; }
+		public CardViewModel[,] Cards { get; }
 
+		public List<CardViewModel> CardList {
+			get
+			{
+				if (_cardList == null)
+				{
+					_cardList = new List<CardViewModel>();
+					for (int i = 0; i < 5; i++)
+					{
+						for (int j = 0; j < 5; j++)
+						{
+							_cardList.Add(Cards[i, j]);
+						}
+					}
+				}
+
+				return _cardList;
+			}
+		}
+
+		private List<CardViewModel> _cardList;
+		
 		public Color FirstPlayer { get; set; }
 
 		public GameViewModel()
