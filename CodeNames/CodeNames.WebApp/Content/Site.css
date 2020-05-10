@@ -170,28 +170,47 @@
 }
 
 
-
-.cn-spy-master-toolbar.red-turn button
-{
-    background-color: red;
-    transition: background-color 2s ease;
+.cn-spy-master-toolbar span{
+    font-weight: bold;
 }
+
 .cn-spy-master-toolbar.red-turn
 {
-    background-color: #E34F1D;
+    background-color: #ff4e31;
     transition: background-color 2s ease;
 }
+.cn-spy-master-toolbar.red-turn button
+{
+    background-color: #a13d2d;
+    color: #fff;
+    border-color: #582118;
+    transition: background-color 2s ease;
+}
+.cn-spy-master-toolbar.red-turn button:hover
+{
+    background-color: #7d281a;
+    transition: background-color 0.5s ease;
+}
+
 
 .cn-spy-master-toolbar.blue-turn
 {
-    background-color: #4069A3;
+    background-color: #698AEA;
     transition: background-color 2s ease;
 }
 .cn-spy-master-toolbar.blue-turn button
 {
-    background-color: blue;
+    background-color: #455B99;
+    color: #fff;
+    border-color: #2D3B62;
     transition: background-color 2s ease;
 }
+.cn-spy-master-toolbar.blue-turn button:hover
+{
+    background-color: #2e3e6c;
+    transition: background-color 0.5s ease;
+}
+
 
 
 #spyMasterMessage{

@@ -55,7 +55,7 @@
 		</div>
 	</div>
 </div>
-<div class="row my-2 py-2 cn-spy-master-toolbar">
+<div class="row my-4 py-2 cn-spy-master-toolbar @(Model.FirstPlayer == Color.Blue ? "blue-turn" : "red-turn")">
 	<form class="form-inline">
 		<div class="form-group mx-4">
 			<span id="playMessage">Espion Bleu, donnez votre indice et le nombre de mots.</span> @*... en attente de votre agent*@
@@ -110,7 +110,7 @@
 
 	<script>
     
-    $(".cn-spy-master-toolbar").removeClass("blue-turn").addClass("red-turn")
+		//	$(".cn-spy-master-toolbar").removeClass("blue-turn").addClass("red-turn")
     
         $(function () {
             const nbrWordsInput = $("#nbrWords");
