@@ -2,38 +2,59 @@
 	ViewBag.Title = "Home Page";
 }
 
-<h1>Codenames</h1>
+<div class="container mt-2">
+	<div class="cn-header cn-header-code">
+		<span>CODE</span>
+	</div>
+	<div class="cn-header cn-header-name">
+		<span>NAMES</span>
+	</div>
+</div>
 
 
-<div class="row">
-	<div class="col-md-4">
+
+<div class="row mt-4">
+	<div class="col-sm-6">
 		<form action="@Url.Action("New", "Game")" method="post">
-			<h3>Je veux démarrer une nouvelle partie :</h3>
-			<p>
-				En tant que spymaster, celui qui donnes les indices
+			
+			<div class="card">
+				<h5 class="card-header">Je veux démarrer une nouvelle partie</h5>
+				
+				<div class="card-body">
+					<p class="card-text">Un code sera créé, vous allez devoir le donner à ceux qui veulent joindre la partie.</p>
+					<h5 class="card-title mt-4">En tant que <b>spymaster</b></h5>
+					<p class="card-text">Vous allez donner les indices</p>
+					<button type="submit" name="PlayerType" value="SpyMaster" class="btn btn-info">Créer la partie</button>
 
-				<button type="submit" name="PlayerType" value="SpyMaster" class="btn btn-info">GO</button>
-
-			</p>
-			<p>
-				En tant qu'agent, celui qui découvre les mots
-				<button type="submit" name="PlayerType" value="Agent" class="btn btn-info">GO</button>
-			</p>
+					<h5 class="card-title mt-5">En tant que <b>agent</b></h5>
+					<p class="card-text">Vous allez découvrir les mots</p>
+					<button type="submit" name="PlayerType" value="Agent" class="btn btn-info">Créer la partie</button>
+				</div>
+			</div>
+			
 		</form>
-
+	</div>
+	<div class="col-sm-6">
 		<form action="@Url.Action("New", "Game")" method="post">
-			<h3>Je veux joindre une nouvelle partie :</h3>
-			<p>
-				Code de la partie: <input type="text"/>
-			</p>
-			<p>
-				En tant que spymaster, celui qui donnes les indices
-				<button type="submit" name="PlayerType" value="SpyMaster" class="btn btn-info">GO</button>
-			</p>
-			<p>
-				En tant qu'agent, celui qui découvre les mots
-				<button type="submit" name="PlayerType" value="Agent" class="btn btn-info">GO</button>
-			</p>
+			<div class="card">
+            	<h5 class="card-header">Je veux joindre une partie existante</h5>
+				<div class="card-body">
+					<div class="form-inline">
+						<div class="form-group">
+							<label for="gameKey" class="mr-2">Entrez le code de la partie: </label>
+							<input type="text" maxlength="8" class="form-control" id="gameKey" aria-describedby="code à 8 caractères" />
+						</div>
+						<div><small id="emailHelp" class="form-text text-muted">Demander le code à la personne qui a créée la partie.</small></div>
+					</div>
+					<h5 class="card-title mt-4">En tant que <b>spymaster</b></h5>
+					<p class="card-text">Vous allez donner les indices</p>
+					<button type="submit" name="PlayerType" value="SpyMaster" class="btn btn-info">Joindre partie</button>
+
+					<h5 class="card-title mt-5">En tant que <b>agent</b></h5>
+					<p class="card-text">Vous allez découvrir les mots</p>
+					<button type="submit" name="PlayerType" value="Agent" class="btn btn-info">Joindre partie</button>
+				</div>
+            </div>	
 		</form>
 	</div>
 </div>

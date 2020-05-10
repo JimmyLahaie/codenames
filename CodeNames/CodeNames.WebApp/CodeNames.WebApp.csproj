@@ -184,7 +184,7 @@
         <Content Include="Content\Images\key-red.png" />
         <Content Include="Content\Images\red-man.png" />
         <Content Include="Content\Images\red-woman.png" />
-        <Content Include="Content\Images\spy-black.png" />
+        <Content Include="Content\Images\assassin.png" />
         <Content Include="Content\Scripts\jquery-1.6.4-vsdoc.js" />
         <Content Include="Content\Scripts\jquery-1.6.4.js" />
         <Content Include="Content\Scripts\jquery-1.6.4.min.js" />

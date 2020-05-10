@@ -1,4 +1,39 @@
-﻿.cn-card-line{
+﻿.cn-header{
+    font-weight: bold;
+    width:300px;
+    text-align: center;
+    margin: 0 auto; border: 3px solid black;
+    box-shadow: 7px 10px #888888;
+}
+
+.cn-header-code{
+    height:100px;
+    font-size: 100px;
+    background-color: #fff;
+    color: #000;
+}
+
+.cn-header-code span
+{
+    margin-top: -33px;
+    display: block;
+}
+
+.cn-header-name{
+    height:86px;
+    font-size: 80px;
+    background-color: #000;
+    color: #fff;
+}
+
+.cn-header-name span
+{
+    margin-top: -27px;
+    display: block;
+}
+
+
+.cn-card-line{
 
 }
 .cn-card-container{
