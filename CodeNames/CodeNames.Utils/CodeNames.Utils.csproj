@@ -32,9 +32,6 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="CodeNames.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\CodeNames.WebApp\Bin\CodeNames.Interfaces.dll</HintPath>
-        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
@@ -44,9 +41,9 @@
         <Compile Include="RandomUtils.cs" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\CodeNames.Interfaces\CodeNames.Interfaces.csproj">
-        <Project>{80fb4758-9085-43b2-b729-ce5d818df6a9}</Project>
-        <Name>CodeNames.Interfaces</Name>
+      <ProjectReference Include="..\CodeNames.Models\CodeNames.Models.csproj">
+        <Project>{c1b12f0e-d491-4de7-bda4-554796fab4ce}</Project>
+        <Name>CodeNames.Models</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

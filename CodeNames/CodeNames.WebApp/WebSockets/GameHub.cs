@@ -19,7 +19,7 @@ namespace CodeNames.WebApp.WebSockets
 		public void ChooseCard(string gameKey, int x, int y)
 		{
 			//var choiceInfo = _gameService.ValidateChoice(gameKey, x, y);
-			
+
 			Clients.Group(gameKey).AgentChoose(new ChooseCardResult
 			{
 				X = x,

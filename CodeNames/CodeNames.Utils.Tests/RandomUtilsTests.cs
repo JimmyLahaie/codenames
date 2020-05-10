@@ -6,27 +6,18 @@ namespace CodeNames.Utils.Tests
 {
 	public class RandomUtilsTests
 	{
-		private readonly RandomUtils _random;
-
 		public RandomUtilsTests()
 		{
 			_random = new RandomUtils();
 		}
-		
-		[Fact]
-		public void CanRandomizeList()
+
+		private readonly RandomUtils _random;
+
+		private void AssertAllDifferent<T>(List<T> lst)
 		{
-			var lst = Enumerable.Range(1, 50).ToList();
-
-			var randomLists = new List<List<int>>();
-			
-			for (int i = 0; i < 20; i++)
-			{
-				_random.RandomizeList(lst);
-				randomLists.Add(lst.Select(x => x).ToList());
-			}
-
-			AssertAllDifferent(randomLists);
+			for (var i = 0; i < lst.Count - 1; i++)
+			for (var j = i + 1; j < lst.Count; j++)
+				Assert.NotEqual(lst[i], lst[j]);
 		}
 
 		[Fact]
@@ -37,15 +28,20 @@ namespace CodeNames.Utils.Tests
 			AssertAllDifferent(lst);
 		}
 
-		private void AssertAllDifferent<T>(List<T> lst)
+		[Fact]
+		public void CanRandomizeList()
 		{
-			for (var i = 0; i < lst.Count - 1; i++)
+			var lst = Enumerable.Range(1, 50).ToList();
+
+			var randomLists = new List<List<int>>();
+
+			for (var i = 0; i < 20; i++)
 			{
-				for (var j = i + 1; j < lst.Count; j++)
-				{
-					Assert.NotEqual(lst[i], lst[j]);	
-				}
+				_random.RandomizeList(lst);
+				randomLists.Add(lst.Select(x => x).ToList());
 			}
+
+			AssertAllDifferent(randomLists);
 		}
 	}
 }

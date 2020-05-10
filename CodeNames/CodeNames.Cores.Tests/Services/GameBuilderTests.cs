@@ -1,23 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeNames.Cores.Services;
-using CodeNames.Interfaces;
 using CodeNames.Models.DTO;
-using Xunit;
+using CodeNames.Models.Interfaces;
 using FakeItEasy;
+using Xunit;
 
 namespace CodeNames.Cores.Tests.Services
 {
 	public class GameBuilderTests
 	{
-		private readonly IRandomUtils _randomUtils;
-		private readonly GameBuilder _gameBuilder;
-
 		public GameBuilderTests()
 		{
-			var wordBuilder = A.Fake<IWordsRepository>(o => o.Strict()); 
+			var wordBuilder = A.Fake<IWordsRepository>(o => o.Strict());
 			_randomUtils = A.Fake<IRandomUtils>(o => o.Strict());
-			
+
 			A.CallTo(() => wordBuilder.Get25RandomWords()).Returns(GetListOfWords());
 			A.CallTo(() => _randomUtils.GenerateCode()).Returns("aaa");
 			A.CallTo(() => _randomUtils.SingleValue(Color.Blue, Color.Red)).Returns(Color.Blue);
@@ -25,15 +22,9 @@ namespace CodeNames.Cores.Tests.Services
 
 			_gameBuilder = new GameBuilder(wordBuilder, _randomUtils);
 		}
-		
-		[Fact]
-		public void BuildingNewGaShouldAssignRandomKey()
-		{
-			A.CallTo(() => _randomUtils.GenerateCode()).Returns("some-code");
 
-			var game = _gameBuilder.GetNewGame();
-			Assert.Equal("some-code", game.Key);
-		}
+		private readonly IRandomUtils _randomUtils;
+		private readonly GameBuilder _gameBuilder;
 
 		[Theory]
 		[InlineData(Color.Blue)]
@@ -50,23 +41,12 @@ namespace CodeNames.Cores.Tests.Services
 			Assert.Equal(7, cards.Count(c => c.Color == Color.Beige));
 		}
 
-		[Fact]
-		public void ColorShouldBeShuffle()
-		{
-			_gameBuilder.GetNewGame();
-			A.CallTo(() => _randomUtils.RandomizeList(A<List<Card>>.Ignored)).MustHaveHappened();
-		}
-
 		private List<Card> GetGameCardList(Game game)
 		{
 			var lst = new List<Card>();
-			for (int i = 0; i < 5; i++)
-			{
-				for (int j = 0; j < 5; j++)
-				{
-					lst.Add(game.Cards[i, j]);
-				}	
-			}
+			for (var i = 0; i < 5; i++)
+			for (var j = 0; j < 5; j++)
+				lst.Add(game.Cards[i, j]);
 
 			return lst;
 		}
@@ -74,12 +54,25 @@ namespace CodeNames.Cores.Tests.Services
 		private List<string> GetListOfWords()
 		{
 			var lst = new List<string>();
-			for (int i = 0; i < 25; i++)
-			{
-				lst.Add("w-" + i);
-			}
+			for (var i = 0; i < 25; i++) lst.Add("w-" + i);
 
 			return lst;
+		}
+
+		[Fact]
+		public void BuildingNewGaShouldAssignRandomKey()
+		{
+			A.CallTo(() => _randomUtils.GenerateCode()).Returns("some-code");
+
+			var game = _gameBuilder.GetNewGame();
+			Assert.Equal("some-code", game.Key);
+		}
+
+		[Fact]
+		public void ColorShouldBeShuffle()
+		{
+			_gameBuilder.GetNewGame();
+			A.CallTo(() => _randomUtils.RandomizeList(A<List<Card>>.Ignored)).MustHaveHappened();
 		}
 	}
 }

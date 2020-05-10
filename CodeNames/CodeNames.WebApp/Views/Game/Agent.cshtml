@@ -28,18 +28,18 @@
 
 <div class="row">
 	<div class="col-10">
-		@for (int i = 0; i < 5; i++)
+		@for (var i = 0; i < 5; i++)
 		{
 			<div class="cn-card-line d-flex flex-row w-100 mb-2">
-				@for (int j = 0; j < 5; j++)
+				@for (var j = 0; j < 5; j++)
 				{
-					var card = @Model.Cards[i, j];
+					var card = Model.Cards[i, j];
 					<div class="cn-card-container flex-fill mx-1">
 						<div class="cn-word-card-container">
 							<div class="cn-word-card">
 								<a href="#" class="w-100 h-100" data-card-x="@i" data-card-y="@j">
-								<span class="flip">@Model.Cards[i, j].Word</span>
-								<span class="main">@Model.Cards[i, j].Word</span>
+									<span class="flip">@Model.Cards[i, j].Word</span>
+									<span class="main">@Model.Cards[i, j].Word</span>
 								</a>
 							</div>
 						</div>
@@ -50,22 +50,22 @@
 	</div>
 	<div class="col-2">
 		<div>
-			<img src="/Content/Images/blue-man.png" style="margin-bottom: 5px; border-radius:  5px;" alt="Cartes bleus"/>    
+			<img src="/Content/Images/blue-man.png" style="margin-bottom: 5px; border-radius:  5px;" alt="Cartes bleus"/>
 		</div>
 		<div>
-			<img src="/Content/Images/red-woman.png" style="margin-bottom: 5px; border-radius: 5px;" alt="Cartes rouges"/>    
+			<img src="/Content/Images/red-woman.png" style="margin-bottom: 5px; border-radius: 5px;" alt="Cartes rouges"/>
 		</div>
 	</div>
 </div>
 
-<input type="hidden" id="gameKey" value="@Model.Key" />
-<input type="hidden" id="playerType" value="@PlayerType.SpyMaster" />
+<input type="hidden" id="gameKey" value="@Model.Key"/>
+<input type="hidden" id="playerType" value="@PlayerType.SpyMaster"/>
 
 @section scripts {
-    <script src="/Content/Scripts/jquery.signalR-2.4.1.js"></script>
-    <script src="~/signalr/hubs"></script>
-  
-    <script>
+	<script src="/Content/Scripts/jquery.signalR-2.4.1.js"></script>
+	<script src="~/signalr/hubs"></script>
+
+	<script>
         $(function () {
             
             const gameKey = $("#gameKey").val();

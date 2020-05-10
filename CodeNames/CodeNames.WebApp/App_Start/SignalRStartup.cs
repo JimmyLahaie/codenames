@@ -1,6 +1,8 @@
-﻿using Owin;
+﻿using CodeNames.WebApp;
 using Microsoft.Owin;
-[assembly: OwinStartup(typeof(CodeNames.WebApp.Startup))]
+using Owin;
+
+[assembly: OwinStartup(typeof(Startup))]
 
 namespace CodeNames.WebApp
 {
@@ -12,5 +14,4 @@ namespace CodeNames.WebApp
 			app.MapSignalR();
 		}
 	}
-	
 }

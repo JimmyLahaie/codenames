@@ -37,9 +37,6 @@
           <HintPath>..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
           <Private>True</Private>
         </Reference>
-        <Reference Include="CodeNames.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\CodeNames.WebApp\Bin\CodeNames.Interfaces.dll</HintPath>
-        </Reference>
         <Reference Include="DeepEqual, Version=2.0.0.0, Culture=neutral, PublicKeyToken=95e562839177c33d">
           <HintPath>..\packages\DeepEqual.2.0.0\lib\net462\DeepEqual.dll</HintPath>
           <Private>True</Private>

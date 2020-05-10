@@ -8,17 +8,29 @@ namespace CodeNames.Cores.Tests.Services
 {
 	public class GameServicesTests
 	{
-		private readonly IGameBuilder _gameBuilder;
-		private readonly IGameRepository _gameRepository;
-		private readonly GameServices _gameService;
-
 		public GameServicesTests()
 		{
 			_gameBuilder = A.Fake<IGameBuilder>();
 			_gameRepository = A.Fake<IGameRepository>();
 			_gameService = new GameServices(_gameBuilder, _gameRepository);
 		}
-		
+
+		private readonly IGameBuilder _gameBuilder;
+		private readonly IGameRepository _gameRepository;
+		private readonly GameServices _gameService;
+
+		[Fact]
+		public void CanCreateNewGame()
+		{
+			var newGame = new Game {Key = "ng"};
+			A.CallTo(() => _gameBuilder.GetNewGame()).Returns(newGame);
+
+			var result = _gameService.CreateGame();
+
+			A.CallTo(() => _gameRepository.Create(newGame)).MustHaveHappened();
+			Assert.Equal(newGame.Key, result);
+		}
+
 		[Fact]
 		public void CanGetGame()
 		{
@@ -28,18 +40,6 @@ namespace CodeNames.Cores.Tests.Services
 
 			var result = _gameService.GetGame(gameKey);
 			Assert.Equal(game, result);
-		}
-
-		[Fact]
-		public void CanCreateNewGame()
-		{
-			var newGame = new Game{Key = "ng"};
-			A.CallTo(() => _gameBuilder.GetNewGame()).Returns(newGame);
-
-			var result = _gameService.CreateGame();
-
-			A.CallTo(() => _gameRepository.Create(newGame)).MustHaveHappened();
-			Assert.Equal(newGame.Key, result);
 		}
 	}
 }

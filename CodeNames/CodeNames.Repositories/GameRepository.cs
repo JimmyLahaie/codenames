@@ -14,31 +14,25 @@ namespace CodeNames.Repositories
 		{
 			_baseFolder = baseFolder;
 		}
-		
+
 		public void Create(Game game)
 		{
 			var filename = GameFullFileName(game.Key);
-			if (File.Exists(filename))
-			{
-				throw new GameAlreadyExistsException(game.Key, _baseFolder);
-			}
+			if (File.Exists(filename)) throw new GameAlreadyExistsException(game.Key, _baseFolder);
 
 			var gameAsJson = JsonConvert.SerializeObject(game);
 			using (var file = File.CreateText(filename))
 			{
 				file.Write(gameAsJson);
 			}
-			
+
 			File.CreateText(GameChoicesFileName(game.Key)).Dispose();
 		}
 
 		public Game GetGame(string key)
 		{
 			var filename = GameFullFileName(key);
-			if (!File.Exists(filename))
-			{
-				throw new GameNotFoundException(key, _baseFolder);
-			}
+			if (!File.Exists(filename)) throw new GameNotFoundException(key, _baseFolder);
 			var json = File.ReadAllText(GameFullFileName(key));
 			return JsonConvert.DeserializeObject<Game>(json);
 		}
@@ -47,7 +41,7 @@ namespace CodeNames.Repositories
 		{
 			return Path.Combine(_baseFolder, key + ".txt");
 		}
-		
+
 		private string GameChoicesFileName(string key)
 		{
 			return Path.Combine(_baseFolder, key + "-c.txt");

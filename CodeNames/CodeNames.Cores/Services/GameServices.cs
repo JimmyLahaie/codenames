@@ -19,7 +19,7 @@ namespace CodeNames.Cores.Services
 			_gameBuilder = gameBuilder;
 			_gameRepository = gameRepository;
 		}
-		
+
 		public string CreateGame()
 		{
 			var newGame = _gameBuilder.GetNewGame();
