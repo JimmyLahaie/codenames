@@ -65,7 +65,7 @@ namespace CodeNames.Cores.Tests.Services
 			A.CallTo(() => _randomUtils.GenerateCode()).Returns("some-code");
 
 			var game = _gameBuilder.GetNewGame();
-			Assert.Equal("some-code", game.Key);
+			Assert.Equal("SOME-CODE", game.Key);
 		}
 
 		[Fact]

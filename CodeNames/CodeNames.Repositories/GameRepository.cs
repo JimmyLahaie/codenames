@@ -17,8 +17,9 @@ namespace CodeNames.Repositories
 
 		public void Create(Game game)
 		{
-			var filename = GameFullFileName(game.Key);
-			if (File.Exists(filename)) throw new GameAlreadyExistsException(game.Key, _baseFolder);
+			var key = game.Key.ToUpper();
+			var filename = GameFullFileName(key);
+			if (File.Exists(filename)) throw new GameAlreadyExistsException(key, _baseFolder);
 
 			var gameAsJson = JsonConvert.SerializeObject(game);
 			using (var file = File.CreateText(filename))
@@ -26,11 +27,12 @@ namespace CodeNames.Repositories
 				file.Write(gameAsJson);
 			}
 
-			File.CreateText(GameChoicesFileName(game.Key)).Dispose();
+			File.CreateText(GameChoicesFileName(key)).Dispose();
 		}
 
 		public Game GetGame(string key)
 		{
+			key = key.ToUpper();
 			var filename = GameFullFileName(key);
 			if (!File.Exists(filename)) throw new GameNotFoundException(key, _baseFolder);
 			var json = File.ReadAllText(GameFullFileName(key));

@@ -26,7 +26,7 @@ namespace CodeNames.Cores.Services
 			var game = new Game
 			{
 				FirstPlayer = _randomUtils.SingleValue(Color.Blue, Color.Red),
-				Key = _randomUtils.GenerateCode()
+				Key = _randomUtils.GenerateCode().ToUpper()
 			};
 			var words = _wordRepository.Get25RandomWords();
 			var cards = GetListOfCards(game.FirstPlayer, words);

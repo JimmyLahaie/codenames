@@ -87,11 +87,25 @@ namespace CodeNames.Repositories.Tests
 		[Fact]
 		public void GetGameThrowsIfGameDoesNotExits()
 		{
-			var gameKey = "someGameNotFound";
+			var gameKey = "SOMEGAMENOTFOUND";
 
 			var ex = Assert.Throws<GameNotFoundException>(() => _repository.GetGame(gameKey));
 			Assert.Contains(gameKey, ex.Message);
 			Assert.Contains(_gameDir, ex.Message);
+		}
+
+		[Fact]
+		public void GameKeyShouldBeCaseInsensitive()
+		{
+			var game = GivenAGame();
+			game.Key = "aAa";
+			
+			_repository.Create(game);
+
+			var result = _repository.GetGame("AaA");
+
+			result.Key = game.Key = "AAA";
+			result.ShouldDeepEqual(game);
 		}
 	}
 }
