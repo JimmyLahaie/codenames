@@ -11,9 +11,9 @@ namespace CodeNames.WebApp.WebSockets
 			Clients.All.addNewMessageToPage(name, message);
 		}
 
-		public void GiveHint(string gameKey, string word, int number)
+		public void GiveHint(string gameKey, string word, int number, PlayerType player)
 		{
-			Clients.Group(gameKey).Hint(word, number);
+			Clients.Group(gameKey).Hint(word, number, (int)player);
 		}
 
 		public void ChooseCard(string gameKey, int x, int y)

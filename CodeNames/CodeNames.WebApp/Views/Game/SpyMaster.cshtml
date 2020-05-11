@@ -1,27 +1,7 @@
 ﻿@using CodeNames.Models.DTO
 @model CodeNames.WebApp.Models.GameViewModel
 @{
-	ViewBag.Title = "Home Page";
-}
-
-@functions
-{
-	string GetColor(Color color)
-	{
-		switch (color)
-		{
-			case Color.Red:
-				return "red";
-			case Color.Blue:
-				return "blue";
-			case Color.Black:
-				return "black";
-			case Color.Beige:
-				return "beige";
-			default:
-				throw new ArgumentOutOfRangeException(nameof(color), color, null);
-		}
-	}
+	ViewBag.Title = "Code Names - Spy Agent";
 }
 
 <h1>Codename</h1>
@@ -55,10 +35,11 @@
 		</div>
 	</div>
 </div>
+
 <div class="row my-4 py-2 cn-spy-master-toolbar @(Model.FirstPlayer == Color.Blue ? "blue-turn" : "red-turn")">
 	<form class="form-inline">
 		<div class="form-group mx-4">
-			<span id="playMessage">Espion Bleu, donnez votre indice et le nombre de mots.</span> @*... en attente de votre agent*@
+			<span id="userMessage" style="width:430px;">Espion Bleu, donnez votre indice et le nombre de mots.</span> @*... en attente de votre agent*@
 		</div>
 		<div class="form-group mx-4">
 			<label for="hintWord" class="sr-only">Votre indice</label>
@@ -78,6 +59,7 @@
 		</div>
 	</form>
 </div>
+
 <div class="row mb-5">
 	<div class="col-12">
 		@for (var i = 0; i < 5; i++)
@@ -102,7 +84,7 @@
 
 <input type="hidden" id="gameKey" value="@Model.Key"/>
 <input type="hidden" id="playerType" value="@PlayerType.SpyMaster"/>
-<input type="hidden" id="firstPlayer" value="@Model.FirstPlayer"/>
+<input type="hidden" id="firstPlayer" value="@((int)Model.FirstPlayer)"/>
 
 @section scripts {
 	<script src="/Content/Scripts/jquery.signalR-2.4.1.js"></script>
@@ -114,6 +96,13 @@
     
         $(function () {
             const nbrWordsInput = $("#nbrWords");
+            const userMessage = $("#userMessage");
+            const currentPlayer = $("#firstPlayer").val();
+            
+            const bluePlayer = @((int)Color.Blue);
+            const redPlayer = @((int)Color.Blue);
+            
+            
             $("button[name='btnNbrWord']").click(function(){
                const toAdd = parseInt($(this).val());
                const newVal = parseInt(nbrWordsInput.val()) + toAdd;
@@ -126,8 +115,12 @@
             const currentPlayerType = $("#playerType").val();
             const gameHub = $.connection.gameHub;
             
-            gameHub.client.hint = function(word, nbrCard) {
-                console.log("Received " + word + " " + nbrCard);
+            gameHub.client.hint = function(word, nbrCard, player) {
+                console.log("Received " + word + " " + nbrCard + " " + player);
+                userMessage.animate({opacity: 0}, "slow", function(){
+                	userMessage.html("... en attente de l'agent " + (player === bluePlayer ? "Bleu" : "Rouge") + " ...");
+                    userMessage.animate({opacity: 1}, "slow");	
+                });
             }
             
             gameHub.client.agentChoose = function(result){
@@ -137,10 +130,10 @@
               img.animate({opacity: 1}, 1200);
             };
             
-            $("#btnConfirm").click(function() {
-               $(this).prop("disabled", "disabled");
-               console.log("calling server for hint")
-               gameHub.server.giveHint(gameKey, $("#hintWord").val(), nbrWordsInput.val()); 
+            $("#btnConfirm").click(function() {	
+               $(".cn-spy-master-toolbar :input").prop("disabled", "disabled");
+               
+               gameHub.server.giveHint(gameKey, $("#hintWord").val(), nbrWordsInput.val(), currentPlayer); 
             });
              
             $.connection.hub.start().done(function () {

@@ -1,33 +1,62 @@
 ﻿@using CodeNames.Models.DTO
 @model CodeNames.WebApp.Models.GameViewModel
 @{
-	ViewBag.Title = "Home Page";
-}
-
-@functions
-{
-	string GetColor(Color color)
-	{
-		switch (color)
-		{
-			case Color.Red:
-				return "red";
-			case Color.Blue:
-				return "blue";
-			case Color.Black:
-				return "black";
-			case Color.Beige:
-				return "beige";
-			default:
-				throw new ArgumentOutOfRangeException(nameof(color), color, null);
-		}
-	}
+	ViewBag.Title = "Code Names - Agent";
 }
 
 <h1>Codename</h1>
 
+<div class="row cn-cards-count">
+	<div class="col-md-3 my-2">
+		<div class="cn-count">
+			<img src="/Content/Images/blue-woman.png" alt="Cartes bleus"/>
+			x
+			<span>@Model.CardList.Count(c => c.Color == Color.Blue)</span>
+		</div>
+	</div>
+	<div class="col-md-3 my-2">
+		<div class="cn-count">
+			<img src="/Content/Images/red-man.png" alt="Cartes rouge"/>
+			x
+			<span>@Model.CardList.Count(c => c.Color == Color.Red)</span>
+		</div>
+	</div>
+	<div class="col-md-3 my-2">
+		<div class="cn-count">
+			<img src="/Content/Images/beige-man.png" alt="Cartes beiges"/>
+			x
+			<span>@Model.CardList.Count(c => c.Color == Color.Beige)</span>
+		</div>
+	</div>
+	<div class="col-md-3 my-2">
+		<div class="cn-count">
+			<img src="/Content/Images/assassin.png" alt="Cartes noir"/>
+			x
+			<span>@Model.CardList.Count(c => c.Color == Color.Black)</span>
+		</div>
+	</div>
+</div>
+
+<div class="row my-4 py-2 cn-spy-master-toolbar @(Model.FirstPlayer == Color.Blue ? "blue-turn" : "red-turn")">
+	<form class="form-inline w-100 row">
+		<div class="form-group pl-5 col-sm-6">
+			<div id="userMessageContainer">
+				<span id="userMessage" style="width:430px;">
+					... en attente de votre Espion @(Model.FirstPlayer == Color.Blue ? "Bleu" : "Rouge") ...
+				</span>
+				<br/>
+				<span id="hintContainer" style="opacity:0;">indice: "<b id="hintWord"></b>", nombre de mots: <b id="nbrWord"></b></span>
+			</div>
+			@*... en attente de votre agent*@
+		</div>
+		<div class="col-sm-6">
+		<button type="button" id="btnConfirm" class="float-right btn btn-primary">Terminé</button>	
+		</div>
+	</form>
+</div>
+
 <div class="row">
-	<div class="col-10">
+	<div class="col-12">
 		@for (var i = 0; i < 5; i++)
 		{
 			<div class="cn-card-line d-flex flex-row w-100 mb-2">
@@ -38,8 +67,8 @@
 						<div class="cn-word-card-container">
 							<div class="cn-word-card">
 								<a href="#" class="w-100 h-100" data-card-x="@i" data-card-y="@j">
-									<span class="flip">@Model.Cards[i, j].Word</span>
-									<span class="main">@Model.Cards[i, j].Word</span>
+									<span class="flip">@card.Word</span>
+									<span class="main">@card.Word</span>
 								</a>
 							</div>
 						</div>
@@ -48,18 +77,11 @@
 			</div>
 		}
 	</div>
-	<div class="col-2">
-		<div>
-			<img src="/Content/Images/blue-man.png" style="margin-bottom: 5px; border-radius:  5px;" alt="Cartes bleus"/>
-		</div>
-		<div>
-			<img src="/Content/Images/red-woman.png" style="margin-bottom: 5px; border-radius: 5px;" alt="Cartes rouges"/>
-		</div>
-	</div>
 </div>
 
 <input type="hidden" id="gameKey" value="@Model.Key"/>
-<input type="hidden" id="playerType" value="@PlayerType.SpyMaster"/>
+<input type="hidden" id="playerType" value="@PlayerType.Agent"/>
+<input type="hidden" id="firstPlayer" value="@((int)Model.FirstPlayer)"/>
 
 @section scripts {
 	<script src="/Content/Scripts/jquery.signalR-2.4.1.js"></script>
@@ -67,13 +89,27 @@
 
 	<script>
         $(function () {
+            const currentPlayer = $("#firstPlayer").val();
+            const userMessageContainer = $("#userMessageContainer")
+            const userMessage = $("#userMessage");
+            const hintContainer = $("#hintContainer");
+            
+            const bluePlayer = @((int)Color.Blue);
+            const redPlayer = @((int)Color.Blue);
             
             const gameKey = $("#gameKey").val();
             const currentPlayerType = $("#playerType").val();
             const gameHub = $.connection.gameHub;
             
-            gameHub.client.hint = function(word, nbrCard) {
+            gameHub.client.hint = function(word, nbrCard, player) {
                 console.log("Received " + word + " " + nbrCard);
+                userMessageContainer.animate({opacity: 0}, "slow", function(){
+                	userMessage.html("Agent " + (player === bluePlayer ? "Bleu" : "Rouge") + ", faites vos choix.");
+                	$("#hintWord").text(word);
+                	$("#nbrWord").text(nbrCard);
+                	hintContainer.css("opacity", 1);
+                	userMessageContainer.animate({opacity: 1}, "slow");
+                });
             }
             
             gameHub.client.agentChoose = function(result){
