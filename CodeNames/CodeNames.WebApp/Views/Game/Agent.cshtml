@@ -89,13 +89,15 @@
 
 	<script>
         $(function () {
-            const currentPlayer = $("#firstPlayer").val();
+            let currentPlayer = $("#firstPlayer").val();
             const userMessageContainer = $("#userMessageContainer")
             const userMessage = $("#userMessage");
             const hintContainer = $("#hintContainer");
             
             const bluePlayer = @((int)Color.Blue);
-            const redPlayer = @((int)Color.Blue);
+            const redPlayer = @((int)Color.Red);
+            const beigeCard = @((int)Color.Beige);
+            const assassinCard = @((int)Color.Black);
             
             const gameKey = $("#gameKey").val();
             const currentPlayerType = $("#playerType").val();
@@ -103,6 +105,7 @@
             
             gameHub.client.hint = function(word, nbrCard, player) {
                 console.log("Received " + word + " " + nbrCard);
+                currentPlayer = player;
                 userMessageContainer.animate({opacity: 0}, "slow", function(){
                 	userMessage.html("Agent " + (player === bluePlayer ? "Bleu" : "Rouge") + ", faites vos choix.");
                 	$("#hintWord").text(word);
@@ -114,7 +117,22 @@
             
             gameHub.client.agentChoose = function(result){
               console.log(result);
-              const img = $("<img alt=\"\"  id=\"blueCardTmp\" class=\"cn-new-card\" src=\"/Content/Images/blue-man.png\" style=\"margin-bottom: 5px; border-radius:  5px;\" />"); 
+              let card;
+              switch (result.CardColor) {
+					case bluePlayer:
+						card = "blue-man";
+						break;
+					case redPlayer:
+						card = "red-woman";
+                        break;
+                    case beigeCard:
+						card = "beige-man";
+						break;
+					case assassinCard:
+						card = "assassin";
+						break;
+				}
+              const img = $("<img alt=\"\"  id=\"blueCardTmp\" class=\"cn-new-card\" src=\"/Content/Images/"+card+".png\" style=\"margin-bottom: 5px; border-radius:  5px;\" />"); 
               $(".cn-card-line:eq("+result.X+") .cn-card-container:eq("+result.Y+") .cn-word-card-container").append(img);
               img.animate({opacity: 1}, 1200);
             };
@@ -130,9 +148,10 @@
             	var lnk = $(this);
             	var x = lnk.data("cardX");
             	var y = lnk.data("cardY");
-            	gameHub.server.chooseCard(gameKey, x, y);
+            	gameHub.server.chooseCard(gameKey, x, y, currentPlayer);
             });
              
+            $.connection.hub.logging = true;
             $.connection.hub.start().done(function () {
                 console.log("join with gamekey " + gameKey);
                 gameHub.server.joinGame(gameKey, currentPlayerType);

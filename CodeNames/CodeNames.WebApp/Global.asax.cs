@@ -8,6 +8,7 @@ using CodeNames.Repositories;
 using CodeNames.Utils;
 using Ninject;
 using Ninject.Web.Common.WebHost;
+using Ninject.Web.Mvc;
 
 namespace CodeNames.WebApp
 {
@@ -36,7 +37,11 @@ namespace CodeNames.WebApp
 			kernel.Bind<IGameRepository>().To<GameRepository>().WithConstructorArgument(gameFolder);
 			kernel.Bind<IRandomUtils>().To<RandomUtils>();
 			kernel.Bind<IFileReader>().To<FileReader>();
+			
+			CurrentKernel = kernel;
 			return kernel;
 		}
+
+		public static IKernel CurrentKernel { get; set; }
 	}
 }

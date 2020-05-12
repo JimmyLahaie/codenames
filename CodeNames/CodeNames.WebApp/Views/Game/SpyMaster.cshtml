@@ -39,7 +39,7 @@
 <div class="row my-4 py-2 cn-spy-master-toolbar @(Model.FirstPlayer == Color.Blue ? "blue-turn" : "red-turn")">
 	<form class="form-inline">
 		<div class="form-group mx-4">
-			<span id="userMessage" style="width:430px;">Espion Bleu, donnez votre indice et le nombre de mots.</span> @*... en attente de votre agent*@
+			<span id="userMessage" style="width:430px;">Espion @(Model.FirstPlayer == Color.Blue ? "Bleu" : "Rouge"), donnez votre indice et le nombre de mots.</span> @*... en attente de votre agent*@
 		</div>
 		<div class="form-group mx-4">
 			<label for="hintWord" class="sr-only">Votre indice</label>
@@ -100,7 +100,9 @@
             const currentPlayer = $("#firstPlayer").val();
             
             const bluePlayer = @((int)Color.Blue);
-            const redPlayer = @((int)Color.Blue);
+            const redPlayer = @((int)Color.Red);
+            const beigeCard = @((int)Color.Beige);
+			const assassinCard = @((int)Color.Black);
             
             
             $("button[name='btnNbrWord']").click(function(){
@@ -125,7 +127,22 @@
             
             gameHub.client.agentChoose = function(result){
               console.log(result);
-              const img = $("<img alt=\"\"  id=\"blueCardTmp\" class=\"cn-new-card\" src=\"/Content/Images/blue-man.png\" style=\"margin-bottom: 5px; border-radius:  5px;\" />"); 
+               let card;
+				switch (result.CardColor) {
+					case bluePlayer:
+						card = "blue-man";
+						break;
+					case redPlayer:
+						card = "red-woman";
+						break;
+					  case beigeCard:
+						card = "beige-woman";
+						break;
+					case assassinCard:
+						card = "assassin";
+						break;
+				}
+              const img = $("<img alt=\"\"  id=\"blueCardTmp\" class=\"cn-new-card\" src=\"/Content/Images/"+card+".png\" style=\"margin-bottom: 5px; border-radius:  5px;\" />"); 
               $(".cn-card-line:eq("+result.X+") .cn-card-container:eq("+result.Y+") .cn-word-card-container").append(img);
               img.animate({opacity: 1}, 1200);
             };
@@ -136,6 +153,7 @@
                gameHub.server.giveHint(gameKey, $("#hintWord").val(), nbrWordsInput.val(), currentPlayer); 
             });
              
+            $.connection.hub.logging = true;
             $.connection.hub.start().done(function () {
                 console.log("join with gamekey " + gameKey);
                 gameHub.server.joinGame(gameKey, currentPlayerType);
