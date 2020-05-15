@@ -43,6 +43,7 @@
       <Compile Include="DTO\Color.cs" />
       <Compile Include="DTO\Game.cs" />
       <Compile Include="DTO\GameActions.cs" />
+      <Compile Include="DTO\Player.cs" />
       <Compile Include="DTO\PlayerType.cs" />
       <Compile Include="Exceptions\GameAlreadyExistsException.cs" />
       <Compile Include="Exceptions\GameNotFoundException.cs" />

@@ -38,9 +38,10 @@ namespace CodeNames.WebApp.WebSockets
 			});
 		}
 
-		public void AgentEndTurn(string gameKey)
+		public void AgentEndTurn(string gameKey, Color player)
 		{
-			Clients.Group(gameKey).NextPlayer("nextPlayerType", "nextPlayerColor");
+			var nextPlayer = _gameServices.EndTurn(gameKey, player);
+			Clients.Group(gameKey).NextPlayer(nextPlayer.PlayerType, nextPlayer.PlayerColor);
 		}
 
 		public void JoinGame(string gameKey, string playerType)

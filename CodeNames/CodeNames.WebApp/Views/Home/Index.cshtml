@@ -35,14 +35,14 @@
 		</form>
 	</div>
 	<div class="col-sm-6">
-		<form action="@Url.Action("New", "Game")" method="post">
+		<form action="@Url.Action("Join", "Game")" method="post">
 			<div class="card">
             	<h5 class="card-header">Je veux joindre une partie existante</h5>
 				<div class="card-body">
 					<div class="form-inline">
 						<div class="form-group">
 							<label for="gameKey" class="mr-2">Entrez le code de la partie: </label>
-							<input type="text" maxlength="8" class="form-control" id="gameKey" aria-describedby="code à 8 caractères" />
+							<input type="text" maxlength="8" class="form-control" id="gameKey" name="gameKey" aria-describedby="code à 8 caractères" />
 						</div>
 						<div><small id="emailHelp" class="form-text text-muted">Demander le code à la personne qui a créée la partie.</small></div>
 					</div>

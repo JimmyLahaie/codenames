@@ -37,7 +37,7 @@
 	</div>
 </div>
 
-<div class="row my-4 py-2 cn-spy-master-toolbar @(Model.FirstPlayer == Color.Blue ? "blue-turn" : "red-turn")">
+<div id="playerToolbar" class="row my-4 py-2 cn-spy-master-toolbar @(Model.FirstPlayer == Color.Blue ? "blue-turn" : "red-turn")">
 	<form class="form-inline w-100 row">
 		<div class="form-group pl-5 col-sm-6">
 			<div id="userMessageContainer">
@@ -50,7 +50,7 @@
 			@*... en attente de votre agent*@
 		</div>
 		<div class="col-sm-6">
-		<button type="button" id="btnConfirm" class="float-right btn btn-primary">Terminé</button>	
+		<button type="button" id="btnEndTurn" class="float-right btn btn-primary">Terminé</button>	
 		</div>
 	</form>
 </div>
@@ -100,7 +100,7 @@
             const assassinCard = @((int)Color.Black);
             
             const gameKey = $("#gameKey").val();
-            const currentPlayerType = $("#playerType").val();
+            let currentPlayerType = $("#playerType").val();
             const gameHub = $.connection.gameHub;
             
             gameHub.client.hint = function(word, nbrCard, player) {
@@ -137,30 +137,34 @@
               img.animate({opacity: 1}, 1200);
             };
             
-            // $("#btnConfirm").click(function() {
-            //    $(this).prop("disabled", "disabled");
-            //    console.log("calling server for hint")
-            //    gameHub.server.giveHint(gameKey, $("#hintWord").val(), nbrWordsInput.val()); 
-            // });
+            gameHub.client.nextPlayer = function(playerType, playerColor){
+            	currentPlayerType = playerType;
+            	currentPlayer = playerColor;
+            	$("#playerToolbar").removeClass("red-turn blue-turn").addClass(playerColor === bluePlayer ? "blue-turn" : "red-turn");
+            	userMessageContainer.animate({opacity: 0}, "slow", function(){
+					userMessage.html("... en attente de votre Espion " + (currentPlayer === bluePlayer ? "Bleu" : "Rouge") + " ...");
+					hintContainer.css("opacity", 0);
+					userMessageContainer.animate({opacity: 1}, "slow");
+				});
+            };
             
             $(".cn-word-card a").click(function(e){
             	e.preventDefault();
-            	var lnk = $(this);
-            	var x = lnk.data("cardX");
-            	var y = lnk.data("cardY");
+            	let lnk = $(this);
+            	let x = lnk.data("cardX");
+            	let y = lnk.data("cardY");
             	gameHub.server.chooseCard(gameKey, x, y, currentPlayer);
             });
-             
+            
+            $("#btnEndTurn").click(function(){
+            	gameHub.server.agentEndTurn(gameKey, currentPlayer);
+            });
+            
             $.connection.hub.logging = true;
             $.connection.hub.start().done(function () {
                 console.log("join with gamekey " + gameKey);
                 gameHub.server.joinGame(gameKey, currentPlayerType);
             });
         });
-        // This optional function html-encodes messages for display in the page.
-        function htmlEncode(value) {
-            var encodedValue = $('<div />').text(value).html();
-            return encodedValue;
-        }
     </script>
 }

@@ -9,5 +9,6 @@ namespace CodeNames.Models.Interfaces
 		void AddHint(string key, string word, int number, Color player);
 		void AddChoice(string key, int x, int y, Color player);
 		GameActions GetActions(string key);
+		void EndTurn(string key, Color player);
 	}
 }

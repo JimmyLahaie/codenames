@@ -69,12 +69,20 @@ namespace CodeNames.Repositories
 					case "c":
 						ga.Actions.Add(new ChooseCardAction{ActionFromType = PlayerType.Agent, ActionFromColor = color(line[1]), X = Convert.ToInt32(line[2]), Y = Convert.ToInt32(line[3])});
 						break;
+					case "e":
+						ga.Actions.Add(new TurnEndAction{ActionFromType = PlayerType.Agent, ActionFromColor = color(line[1])});
+						break;
 					default:
 						throw new Exception($"Unknow action '{line[0]}'");
 				}
 			}
 
 			return ga;
+		}
+
+		public void EndTurn(string key, Color player)
+		{
+			File.AppendAllLines(GameChoicesFileName(key), new []{$"e,{(int)player}"});
 		}
 
 		private string GameFullFileName(string key)

@@ -1,6 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using CodeNames.Cores.Services;
 using CodeNames.Models.DTO;
+using CodeNames.Models.Exceptions;
 using CodeNames.WebApp.Models;
 
 namespace CodeNames.WebApp.Controllers
@@ -37,6 +39,21 @@ namespace CodeNames.WebApp.Controllers
 		{
 			var gameKey = _gameService.CreateGame();
 			return RedirectToAction(playerType == PlayerType.SpyMaster ? "SpyMaster" : "Agent", new {key = gameKey});
+		}
+		
+		[HttpPost]
+		public ActionResult Join(string gameKey, PlayerType playerType)
+		{
+			try
+			{
+				var game = _gameService.GetGame(gameKey);
+				return RedirectToAction(playerType == PlayerType.SpyMaster ? "SpyMaster" : "Agent", new {key = game.Key});
+			}
+			catch (GameNotFoundException)
+			{
+				return RedirectToAction("Index", "Home");
+			}
+			
 		}
 	}
 }

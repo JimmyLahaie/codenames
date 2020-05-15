@@ -9,6 +9,7 @@ namespace CodeNames.Cores.Services
 		Game GetGame(string id);
 		void NewHint(string gameKey, string word, int number, Color player);
 		ChoiceResult NewChoice(string gameKey, int i, int i1, Color player);
+		Player EndTurn(string gameKey, Color player);
 	}
 
 	public class GameServices : IGameServices
@@ -58,7 +59,6 @@ namespace CodeNames.Cores.Services
 				Y = y
 			};
 			
-
 			//todo : Get game then card
 			//if already turn : ...
 			//if assassin : game end
@@ -67,6 +67,19 @@ namespace CodeNames.Cores.Services
 			//  if all color card reveiled -> end game
 			//else end
 		}
+
+		public Player EndTurn(string gameKey, Color player)
+		{
+			_gameRepository.EndTurn(gameKey, player);
+			//todo: Analyse game and action to ensure who's turn it is
+
+			return new Player
+			{
+				PlayerType = PlayerType.SpyMaster,
+				PlayerColor = player == Color.Blue ? Color.Red : Color.Blue
+			};
+		}
+
 
 		private CurrentGameState GetCurrentTurnState(Game game, GameActions gameChoices)
 		{

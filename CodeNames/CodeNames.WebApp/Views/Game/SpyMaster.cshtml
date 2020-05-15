@@ -36,10 +36,10 @@
 	</div>
 </div>
 
-<div class="row my-4 py-2 cn-spy-master-toolbar @(Model.FirstPlayer == Color.Blue ? "blue-turn" : "red-turn")">
+<div id="playerToolbar" class="row my-4 py-2 cn-spy-master-toolbar @(Model.FirstPlayer == Color.Blue ? "blue-turn" : "red-turn")">
 	<form class="form-inline">
 		<div class="form-group mx-4">
-			<span id="userMessage" style="width:430px;">Espion @(Model.FirstPlayer == Color.Blue ? "Bleu" : "Rouge"), donnez votre indice et le nombre de mots.</span> @*... en attente de votre agent*@
+			<span id="userMessage" style="width:430px;">Espion @(Model.FirstPlayer == Color.Blue ? "Bleu" : "Rouge"), donnez votre indice et le nombre de mots.</span>
 		</div>
 		<div class="form-group mx-4">
 			<label for="hintWord" class="sr-only">Votre indice</label>
@@ -95,9 +95,11 @@
 		//	$(".cn-spy-master-toolbar").removeClass("blue-turn").addClass("red-turn")
     
         $(function () {
-            const nbrWordsInput = $("#nbrWords");
+            const gameKey = $("#gameKey").val();
+        	const nbrWordsInput = $("#nbrWords");
             const userMessage = $("#userMessage");
-            const currentPlayer = $("#firstPlayer").val();
+            let currentPlayer = $("#firstPlayer").val();
+            let currentPlayerType = $("#playerType").val();
             
             const bluePlayer = @((int)Color.Blue);
             const redPlayer = @((int)Color.Red);
@@ -113,8 +115,7 @@
                }
             });
             
-            const gameKey = $("#gameKey").val();
-            const currentPlayerType = $("#playerType").val();
+           
             const gameHub = $.connection.gameHub;
             
             gameHub.client.hint = function(word, nbrCard, player) {
@@ -146,6 +147,19 @@
               $(".cn-card-line:eq("+result.X+") .cn-card-container:eq("+result.Y+") .cn-word-card-container").append(img);
               img.animate({opacity: 1}, 1200);
             };
+            
+             gameHub.client.nextPlayer = function(playerType, playerColor){
+				currentPlayerType = playerType;
+				currentPlayer = playerColor;
+				$("#playerToolbar").removeClass("red-turn blue-turn").addClass(playerColor === bluePlayer ? "blue-turn" : "red-turn");
+				userMessage.animate({opacity: 0}, "slow", function(){
+					userMessage.html("Espion " + (currentPlayer === bluePlayer ? "Bleu" : "Rouge") + ", donnez votre indice et le nombre de mots.");
+					userMessage.animate({opacity: 1}, "slow");
+				});
+				$("#hintWord").val("");
+				nbrWordsInput.val("1");
+				$(".cn-spy-master-toolbar :input").removeAttr("disabled");
+			};
             
             $("#btnConfirm").click(function() {	
                $(".cn-spy-master-toolbar :input").prop("disabled", "disabled");

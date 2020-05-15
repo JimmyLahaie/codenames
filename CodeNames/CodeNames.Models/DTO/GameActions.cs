@@ -33,4 +33,10 @@ namespace CodeNames.Models.DTO
 		public int X { get; set; }
 		public int Y { get; set; }
 	}
+	
+	public class TurnEndAction : IAction
+	{
+		public PlayerType ActionFromType { get; set; }
+		public Color ActionFromColor { get; set; }
+	}
 }
