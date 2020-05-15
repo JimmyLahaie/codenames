@@ -360,7 +360,7 @@ namespace CodeNames.Repositories
 "maîtresse",
 "jumelle",
 "fantôme",
-"trou",,
+"trou",
 "classe",
 "schtroumpf",
 "allemagne",
